@@ -50,3 +50,37 @@ function extractAndConvert<T extends object, U extends keyof T>(
 console.log(extractAndConvert({ name: "ank" }, "name"));
 //throws error when key doesn't exist on object passed
 //console.log(extractAndConvert({name: 'ank'}, 'name1'));
+
+
+//Generic Class
+class DataStorage<T extends string | boolean | number> {
+    private data: T[] = [];
+  
+    addItem(item: T) {
+      this.data.push(item);
+    }
+  
+    removeItem(item: T) {
+      this.data.splice(this.data.indexOf(item), 1);
+    }
+  
+    getItems(): T[] {
+      return this.data;
+    }
+  }
+  
+  const txtStorage = new DataStorage<string>();
+  txtStorage.addItem("Ank");
+  txtStorage.addItem("Gol");
+  //throws error - string cant store number
+  //txtStorage.addItem(12);
+  txtStorage.removeItem("Gol");
+  console.log(txtStorage.getItems());
+  
+  const numStorage = new DataStorage<number>();
+  numStorage.addItem(21);
+  numStorage.addItem(12);
+  //throws error - number cant store string
+  //numStorage.addItem('Gol');
+  numStorage.removeItem(12);
+  console.log(numStorage.getItems());
