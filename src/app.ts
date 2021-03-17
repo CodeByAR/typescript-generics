@@ -22,3 +22,20 @@ const mergeObj = merge({ name: "Ank", hobbies: ["coding"] }, { age: 26 });
 //will give error because number is not an object
 //const mergeObj1 = merge({ name: "Ank", hobbies: ["coding"] }, 30);
 console.log(mergeObj);
+
+//Ensure that whatever passed have a length property
+interface Lengthy {
+    length: number;
+  }
+  
+  function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+    let descriptionText = "Got no value";
+    if (element.length > 0) {
+      descriptionText = `Got ${element.length} element(s)`;
+    }
+    return [element, descriptionText];
+  }
+  
+  console.log(countAndDescribe("Hi There!"));
+  console.log(countAndDescribe(["Man", "Animal"]));
+  
