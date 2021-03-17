@@ -25,17 +25,28 @@ console.log(mergeObj);
 
 //Ensure that whatever passed have a length property
 interface Lengthy {
-    length: number;
+  length: number;
+}
+
+function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+  let descriptionText = "Got no value";
+  if (element.length > 0) {
+    descriptionText = `Got ${element.length} element(s)`;
   }
-  
-  function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
-    let descriptionText = "Got no value";
-    if (element.length > 0) {
-      descriptionText = `Got ${element.length} element(s)`;
-    }
-    return [element, descriptionText];
-  }
-  
-  console.log(countAndDescribe("Hi There!"));
-  console.log(countAndDescribe(["Man", "Animal"]));
-  
+  return [element, descriptionText];
+}
+
+console.log(countAndDescribe("Hi There!"));
+console.log(countAndDescribe(["Man", "Animal"]));
+
+// keyof can be used as type constraint
+function extractAndConvert<T extends object, U extends keyof T>(
+  obj: T,
+  key: U
+) {
+  return `Value: ${obj[key]}`;
+}
+
+console.log(extractAndConvert({ name: "ank" }, "name"));
+//throws error when key doesn't exist on object passed
+//console.log(extractAndConvert({name: 'ank'}, 'name1'));
